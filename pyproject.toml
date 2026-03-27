@@ -1,0 +1,62 @@
+[project]
+name = "joomla-bruteforce"
+version = "0.1.0"
+description = "Joomla administrator login brute-force helper"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "requests>=2.31",
+]
+
+[project.scripts]
+joomla-brute = "joomla_brute:main"
+
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["joomla_brute"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.8",
+    "ruff>=0.4",
+    "types-beautifulsoup4",
+    "types-requests",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["joomla_brute", "."]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "urllib3.*"
+ignore_missing_imports = true
