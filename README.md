@@ -4,9 +4,6 @@ Joomla administrator login brute-force helper.
 
 Tested on Joomla! 3.8.8.
 
-## Layout
-
-Application code lives in the `joomla_brute/` package: CLI (`cli.py`), HTTP session (`session.py`), login/CSRF (`auth.py`), brute-force loop (`engine.py`), and helpers (`constants.py`, `url_utils.py`, `fileio.py`, `reporter.py`, `logging_config.py`, `app.py`).
 
 ## Setup (uv)
 
@@ -45,6 +42,8 @@ chmod +x joomla-brute.py
 | `-p`, `--proxy` | HTTP(S) proxy, e.g. `http://127.0.0.1:8080`. |
 | `-v` | Verbose: `-v` info + print failed attempts; `-vv` debug; `-vvv` also enables urllib3 connection debug. |
 | `--no-color` | Disable ANSI colors (also respects `NO_COLOR` in the environment). |
+| `-t`, `--threads` | Concurrent workers (each has its own HTTP session). Default scales with CPU count (capped). |
+| `--no-progress` | Disable the tqdm progress bar (enabled by default on stderr). Without it, the wordlist is scanned once up front to compute the total for the bar. |
 
 Exit code `0` if credentials are found, `1` otherwise.
 

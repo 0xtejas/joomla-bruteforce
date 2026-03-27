@@ -12,3 +12,12 @@ def iter_nonempty_lines(path: Path, encoding: str = "utf-8") -> Iterator[str]:
             s = line.strip()
             if s:
                 yield s
+
+
+def count_nonempty_lines(path: Path, encoding: str = "utf-8") -> int:
+    n = 0
+    with path.open(encoding=encoding, errors="replace") as f:
+        for line in f:
+            if line.strip():
+                n += 1
+    return n

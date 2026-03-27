@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 
 
@@ -40,6 +41,19 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--no-color",
         action="store_true",
         help="Disable ANSI colors in credential output",
+    )
+    parser.add_argument(
+        "-t",
+        "--threads",
+        type=int,
+        default=max(4, min(32, (os.cpu_count() or 4) * 2)),
+        metavar="N",
+        help="Concurrent worker threads (each uses its own HTTP session; default: %(default)s)",
+    )
+    parser.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable the tqdm progress bar",
     )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-usr", "--username", help="Single username")

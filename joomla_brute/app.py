@@ -56,6 +56,10 @@ def main(argv: list[str] | None = None) -> int:
         LOG.error("No usernames to try")
         return 1
 
+    if args.threads < 1:
+        LOG.error("--threads must be >= 1")
+        return 1
+
     session = build_session(proxies)
     try:
         fetch_initial_cookies(session, admin_url)
@@ -64,13 +68,16 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     log_failures = args.verbose >= 1
+    show_progress = not args.no_progress
     found, _u, _p = run_bruteforce(
-        session,
         admin_url,
         wordlist,
         usernames,
+        proxies=proxies,
         log_failures=log_failures,
         use_color=use_color,
+        num_workers=args.threads,
+        show_progress=show_progress,
     )
     if found:
         return 0
